@@ -1,0 +1,27 @@
+{
+  "name": "tiny_url_proj",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch index.js",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miricoen/NodeProject.git"
+  },
+  "author": "miri cohen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/miricoen/NodeProject/issues"
+  },
+  "homepage": "https://github.com/miricoen/NodeProject#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}
