@@ -1,6 +1,5 @@
 // const mongoose = require('mongoose');
 import mongoose from "mongoose";
-
 const userModel = new mongoose.Schema({
   name: {
     type: String,
@@ -17,9 +16,8 @@ const userModel = new mongoose.Schema({
   },
   links: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Url'
+    ref: 'Link'
   }]
 });
 
-// module.exports = mongoose.model('User', userSchema);
 export default mongoose.model("user", userModel);
