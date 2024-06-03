@@ -6,6 +6,7 @@ import connectDB from "./connect.js";
 import linksRouter from "./routers/linksRouter.js";
 import usersRouter from "./routers/usersRouter.js";
 import linksController from "./controllers/linksController.js";
+import usersController from "./controllers/usersController.js";
 connectDB();
 const app = express();
 const port = 3000;
@@ -18,6 +19,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/redirect/:id", linksController.redirect);
+app.get("/getClicksByTarget/:id",usersController.getClicksByTarget);
 
 app.use("/links", linksRouter);
 app.use("/users", usersRouter);

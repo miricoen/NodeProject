@@ -4,10 +4,7 @@ const linksController = {
   getList: async (req, res) => {
     try {
       const links = await Link.find();
-
       res.json(links);
-      // res.send(`get link `);
-
     } catch (e) {
       res.status(400).json({ message: e.message });
     }
@@ -32,7 +29,9 @@ const linksController = {
   put: async (req, res) => {
     const { id } = req.params;
     try {
-      const updatedLink = await Link.findByIdAndUpdate(id, req.body, { new: true });
+      const updatedLink = await Link.findByIdAndUpdate(id, req.body, {
+        new: true,
+      });
       res.json(updatedLink);
     } catch (e) {
       res.status(400).json({ message: e.message });
@@ -49,25 +48,48 @@ const linksController = {
   },
 
   redirect: async (req, res) => {
-    const { id } = req.params;
-    const ipAddress = req.ip;  // כתובת ה-IP של המשתמש
-
     try {
-      const link = await Link.findById(id);
+      const link = await Link.findById(req.params.id);
+
       if (!link) {
         return res.status(404).json({ message: "Link not found" });
       }
 
-      // הוספת קליק למערך הקליקים של הקישור
-      link.clicks.push({
+      const targetParamValue = req.query[link.targetParamName] || ""; // ערך הפרמטר מה-query string
+      const click = {
         insertedAt: new Date(),
-        ipAddress
-      });
+        ipAddress: req.ip,
+        targetParamValue: targetParamValue,
+      };
 
+      link.clicks.push(click);
       await link.save();
 
-      // הפנייה מחדש ל-URL המקורי
       res.redirect(link.originalUrl);
+    } catch (e) {
+      res.status(400).json({ message: e.message });
+    }
+  },
+
+  getClicksByTarget: async (req, res) => {
+    try {
+      const link = await Link.findById(req.params.id);
+
+      if (!link) {
+        return res.status(404).json({ message: "Link not found" });
+      }
+
+      const clicksByTarget = {};
+
+      link.clicks.forEach((click) => {
+        const targetValue = click.targetParamValue || "";
+        if (!clicksByTarget[targetValue]) {
+          clicksByTarget[targetValue] = 0;
+        }
+        clicksByTarget[targetValue]++;
+      });
+
+      res.json(clicksByTarget);
     } catch (e) {
       res.status(400).json({ message: e.message });
     }

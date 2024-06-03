@@ -8,7 +8,5 @@ linksRouter.post("/", linksController.add);
 linksRouter.put("/:id", linksController.put);
 linksRouter.delete("/:id", linksController.delete);
 
-// linksRouter.get("/redirect/:id", linksController.redirect);
-
 
 export default linksRouter;

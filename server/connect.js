@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 const uriLocal = "mongodb://localhost:27017/tiny_url";
 
 const connectDB = async () => {
-  // await mongoose.connect(uriLocal);
 
   await mongoose.connect("mongodb://127.0.0.1:27017/tiny_url", {
     useNewUrlParser: true,
